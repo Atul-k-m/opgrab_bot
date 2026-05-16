@@ -1,0 +1,19 @@
+{
+  "name": "iqbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "OpportunityIQ - AI-powered Opportunity Intelligence Platform",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.105.4",
+    "dotenv": "^17.4.2",
+    "telegraf": "^4.16.3"
+  }
+}

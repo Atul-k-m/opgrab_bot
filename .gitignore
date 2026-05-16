@@ -1,0 +1,17 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment variables
+.env
+
+# Project specific ignores (as requested)
+ambition.md
+implementation_details.md
+
+# OS files
+.DS_Store
+Thumbs.db
