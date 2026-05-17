@@ -7,7 +7,7 @@
   <title>OpportunityIQ — Opportunity Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=JetBrains+Mono:wght@400;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
 <body>
@@ -17,60 +17,104 @@
       <div class="loader-spinner"></div>
     </div>
 
-    <!-- ─── Auth Screen ─── -->
-    <div id="auth-screen" class="screen" style="display:none;">
-      <div class="auth-bg">
-        <div class="auth-orb auth-orb-1"></div>
-        <div class="auth-orb auth-orb-2"></div>
-        <div class="auth-orb auth-orb-3"></div>
-      </div>
-      <div class="auth-container">
-        <div class="auth-card">
+    <!-- ─── Auth Screen (Landing & Login) ─── -->
+    <div id="auth-screen" class="landing-page" style="display:none;">
+      
+      <!-- Section 1: Yellow (Hero & Mission) -->
+      <section class="landing-section yellow-section">
+        <div class="landing-content-inner">
           <div class="auth-logo">
-            <span class="logo-icon">⚡</span>
-            <h1>OpportunityIQ</h1>
+            <svg class="logo-icon-svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            <h1>OPPORTUNITY_IQ</h1>
             <p class="auth-subtitle">AI-Powered Opportunity Intelligence</p>
           </div>
-          
-          <div id="auth-form-section">
-            <div class="auth-tabs">
-              <button class="auth-tab active" data-tab="login">Sign In</button>
-              <button class="auth-tab" data-tab="signup">Sign Up</button>
-            </div>
 
-            <form id="auth-form" class="auth-form">
-              <div class="input-group">
-                <label for="auth-email">Email</label>
-                <input type="email" id="auth-email" placeholder="you@example.com" required autocomplete="email" />
-              </div>
-              <div class="input-group">
-                <label for="auth-password">Password</label>
-                <input type="password" id="auth-password" placeholder="••••••••" required minlength="6" autocomplete="current-password" />
-              </div>
-              <button type="submit" id="auth-submit-btn" class="btn btn-primary btn-full">
-                <span id="auth-btn-text">Sign In</span>
-                <div id="auth-btn-spinner" class="btn-spinner" style="display:none;"></div>
-              </button>
-            </form>
-            
-            <div class="auth-divider"><span>or</span></div>
-            
-            <button id="magic-link-btn" class="btn btn-ghost btn-full">
-              ✉️ Send Magic Link (passwordless)
-            </button>
-
-            <p id="auth-error" class="auth-error" style="display:none;"></p>
-            <p id="auth-success" class="auth-success" style="display:none;"></p>
-          </div>
-
-          <div class="auth-features">
-            <div class="feature-pill">🏆 Hackathons</div>
-            <div class="feature-pill">💼 Internships</div>
-            <div class="feature-pill">🤖 AI Digest</div>
-            <div class="feature-pill">📊 Analytics</div>
+          <div class="landing-info">
+            <h3>OUR MISSION</h3>
+            <p>OpportunityIQ bridges the gap between talented individuals and the opportunities that match their skills. Our AI-driven platform cuts through the noise of thousands of generic job postings to deliver personalized, high-signal recommendations.</p>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- Section 2: White (How it works & Mecha Crow) -->
+      <section class="landing-section white-section">
+        <div class="landing-split">
+          <div class="landing-split-content">
+            <h3>
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              HOW IT WORKS
+            </h3>
+            <ul class="landing-list">
+              <li><strong>1. INGESTION:</strong> Scrapes Unstop, Devfolio, Internshala, Remotive, Arbeitnow, and LinkedIn every 6 hours.</li>
+              <li><strong>2. AI MATCHING:</strong> Powered by Groq (llama-3.3-70b), scoring roles based on your skills and domains.</li>
+              <li><strong>3. DELIVERY:</strong> Receive AI-ranked opportunities directly via Telegram.</li>
+            </ul>
+          </div>
+          <div class="landing-split-image">
+            <img src="/mecha-bg.png" class="mecha-illustration" alt="Mecha Crow">
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Yellow (Commands & Login) -->
+      <section class="landing-section yellow-section">
+        <div class="landing-split reverse-mobile">
+          <div class="landing-split-content" style="display:flex; flex-direction:column; gap:20px;">
+            <div>
+              <h3>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                BOT COMMANDS
+              </h3>
+              <div class="landing-commands">
+                <code>/start</code> <code>/foryou</code> <code>/internships</code> <code>/jobs</code> <code>/hackathons</code>
+              </div>
+            </div>
+            <img src="/mecha-server.png" class="mecha-illustration-small" alt="Server">
+          </div>
+
+          <div class="landing-split-form">
+            <div class="auth-container-inline">
+              <div id="auth-form-section">
+                <h2 class="auth-heading">SYSTEM ACCESS</h2>
+                <div class="auth-tabs">
+                  <button class="auth-tab active" data-tab="login">Sign In</button>
+                  <button class="auth-tab" data-tab="signup">Sign Up</button>
+                </div>
+
+                <form id="auth-form" class="auth-form">
+                  <div class="input-group">
+                    <label for="auth-email">Operator ID (Email)</label>
+                    <input type="email" id="auth-email" placeholder="you@example.com" required autocomplete="email" />
+                  </div>
+                  <div class="input-group">
+                    <label for="auth-password">Passcode</label>
+                    <input type="password" id="auth-password" placeholder="••••••••" required minlength="6" autocomplete="current-password" />
+                  </div>
+                  <button type="submit" id="auth-submit-btn" class="btn btn-primary btn-full">
+                    <span id="auth-btn-text">Authenticate</span>
+                    <div id="auth-btn-spinner" class="btn-spinner" style="display:none;"></div>
+                  </button>
+                </form>
+                
+                <div class="auth-divider"><span>OR</span></div>
+                
+                <button id="magic-link-btn" class="btn btn-ghost btn-full">
+                  ✉️ Send Magic Link
+                </button>
+
+                <p id="auth-error" class="auth-error" style="display:none;"></p>
+                <p id="auth-success" class="auth-success" style="display:none;"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Credits -->
+      <footer style="text-align: center; padding: 24px; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.85rem; color: var(--surface); background: var(--border);">
+        BUILT BY ATUL — CS GRAD & JOB SEEKER <br>
+        <span style="font-size: 0.75rem; color: #6b7280; margin-top: 8px; display: inline-block;">"Looking for opportunities, just like you."</span>
+      </footer>
     </div>
 
     <!-- ─── Dashboard ─── -->
@@ -101,6 +145,10 @@
           <li class="nav-item" data-page="profile">
             <span class="nav-icon">👤</span>
             <span class="nav-label">Profile</span>
+          </li>
+          <li class="nav-item" data-page="about">
+            <span class="nav-icon">ℹ️</span>
+            <span class="nav-label">About</span>
           </li>
         </ul>
         <div class="sidebar-footer">
@@ -300,6 +348,87 @@
                   <code>/digest</code>
                   <code>/stats</code>
                   <code>/subscribe</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Page: About -->
+        <section id="page-about" class="page">
+          <div class="page-header">
+            <h2>ℹ️ About OpportunityIQ</h2>
+            <p class="page-desc">The vision, architecture, and commands behind the intelligence platform</p>
+          </div>
+          
+          <div class="about-grid">
+            <!-- Mission -->
+            <div class="card about-card">
+              <h3>Our Mission</h3>
+              <p>OpportunityIQ was created to bridge the gap between talented individuals and the opportunities that match their skills. Our AI-driven platform cuts through the noise of thousands of generic job postings to deliver personalized, high-signal recommendations.</p>
+            </div>
+
+            <!-- How It Works -->
+            <div class="card about-card">
+              <h3>⚙️ How It Works</h3>
+              <div class="how-it-works-steps">
+                <div class="step">
+                  <div class="step-icon">1</div>
+                  <div class="step-content">
+                    <h4>Multi-Source Ingestion</h4>
+                    <p>Every 6 hours, our scraper autonomously fetches the latest opportunities from Unstop, Devfolio, Internshala, Remotive, Arbeitnow, and LinkedIn. It actively filters out irrelevant senior and PhD roles.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-icon">2</div>
+                  <div class="step-content">
+                    <h4>Intelligent AI Matching</h4>
+                    <p>Powered by <strong>Groq (llama-3.3-70b)</strong>, the bot scores each opportunity (0-100) based on your personalized profile, taking into account your batch year, skills, domains, and preference for remote or India-accessible roles.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-icon">3</div>
+                  <div class="step-content">
+                    <h4>Seamless Delivery</h4>
+                    <p>The best matches are delivered right to your Telegram chat, complete with AI-generated reasoning on exactly <em>why</em> an opportunity fits you.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bot Commands -->
+            <div class="card about-card">
+              <h3>🤖 Telegram Bot Commands</h3>
+              <p style="margin-bottom: 16px;">Interact directly with the intelligence engine through our Telegram bot. Start by sending <code>/start</code> to build your AI profile.</p>
+              
+              <div class="bot-command-list">
+                <div class="cmd-item">
+                  <span class="cmd-name">/start</span>
+                  <span class="cmd-desc">Launch the onboarding flow to set your Batch, Domains, Skills, and CGPA.</span>
+                </div>
+                <div class="cmd-item">
+                  <span class="cmd-name">/foryou</span>
+                  <span class="cmd-desc">Get the top AI-ranked opportunities specifically tailored to your profile.</span>
+                </div>
+                <div class="cmd-item">
+                  <span class="cmd-name">/internships</span>
+                  <span class="cmd-desc">Discover the latest internships, heavily ranked towards India/Remote roles.</span>
+                </div>
+                <div class="cmd-item">
+                  <span class="cmd-name">/jobs</span>
+                  <span class="cmd-desc">Find entry-level tech roles and remote positions globally.</span>
+                </div>
+                <div class="cmd-item">
+                  <span class="cmd-name">/hackathons</span>
+                  <span class="cmd-desc">Explore upcoming hackathons worldwide.</span>
+                </div>
+                <div class="cmd-item">
+                  <span class="cmd-name">/profile</span>
+                  <span class="cmd-desc">View your current skills, domain tracking coverage, and match settings.</span>
+                </div>
+                <div class="cmd-item">
+                  <span class="cmd-name">/refresh</span>
+                  <span class="cmd-desc">Force the scraper to run immediately to find newly posted roles.</span>
                 </div>
               </div>
             </div>
