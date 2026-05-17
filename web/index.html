@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="OpportunityIQ — AI-powered opportunity intelligence platform. Discover hackathons, internships, and jobs from top sources." />
+  <title>OpportunityIQ — Opportunity Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+  <div id="app">
+    <!-- Loading Spinner -->
+    <div id="loader" class="loader-overlay">
+      <div class="loader-spinner"></div>
+    </div>
+
+    <!-- ─── Auth Screen ─── -->
+    <div id="auth-screen" class="screen" style="display:none;">
+      <div class="auth-bg">
+        <div class="auth-orb auth-orb-1"></div>
+        <div class="auth-orb auth-orb-2"></div>
+        <div class="auth-orb auth-orb-3"></div>
+      </div>
+      <div class="auth-container">
+        <div class="auth-card">
+          <div class="auth-logo">
+            <span class="logo-icon">⚡</span>
+            <h1>OpportunityIQ</h1>
+            <p class="auth-subtitle">AI-Powered Opportunity Intelligence</p>
+          </div>
+          
+          <div id="auth-form-section">
+            <div class="auth-tabs">
+              <button class="auth-tab active" data-tab="login">Sign In</button>
+              <button class="auth-tab" data-tab="signup">Sign Up</button>
+            </div>
+
+            <form id="auth-form" class="auth-form">
+              <div class="input-group">
+                <label for="auth-email">Email</label>
+                <input type="email" id="auth-email" placeholder="you@example.com" required autocomplete="email" />
+              </div>
+              <div class="input-group">
+                <label for="auth-password">Password</label>
+                <input type="password" id="auth-password" placeholder="••••••••" required minlength="6" autocomplete="current-password" />
+              </div>
+              <button type="submit" id="auth-submit-btn" class="btn btn-primary btn-full">
+                <span id="auth-btn-text">Sign In</span>
+                <div id="auth-btn-spinner" class="btn-spinner" style="display:none;"></div>
+              </button>
+            </form>
+            
+            <div class="auth-divider"><span>or</span></div>
+            
+            <button id="magic-link-btn" class="btn btn-ghost btn-full">
+              ✉️ Send Magic Link (passwordless)
+            </button>
+
+            <p id="auth-error" class="auth-error" style="display:none;"></p>
+            <p id="auth-success" class="auth-success" style="display:none;"></p>
+          </div>
+
+          <div class="auth-features">
+            <div class="feature-pill">🏆 Hackathons</div>
+            <div class="feature-pill">💼 Internships</div>
+            <div class="feature-pill">🤖 AI Digest</div>
+            <div class="feature-pill">📊 Analytics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Dashboard ─── -->
+    <div id="dashboard-screen" class="screen" style="display:none;">
+      <!-- Sidebar -->
+      <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+          <span class="logo-icon-sm">⚡</span>
+          <span class="sidebar-title">OpportunityIQ</span>
+        </div>
+        <ul class="sidebar-nav">
+          <li class="nav-item active" data-page="overview">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Overview</span>
+          </li>
+          <li class="nav-item" data-page="opportunities">
+            <span class="nav-icon">🌟</span>
+            <span class="nav-label">Opportunities</span>
+          </li>
+          <li class="nav-item" data-page="internships">
+            <span class="nav-icon">💼</span>
+            <span class="nav-label">Internships</span>
+          </li>
+          <li class="nav-item" data-page="hackathons">
+            <span class="nav-icon">🏆</span>
+            <span class="nav-label">Hackathons</span>
+          </li>
+          <li class="nav-item" data-page="profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <button id="logout-btn" class="btn btn-ghost btn-sm">
+            🚪 Sign Out
+          </button>
+          <p class="sidebar-email" id="user-email-display"></p>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+          <button id="sidebar-toggle" class="sidebar-toggle">☰</button>
+          <div class="topbar-search">
+            <input type="text" id="global-search" placeholder="Search opportunities..." />
+            <span class="search-icon">🔍</span>
+          </div>
+          <div class="topbar-actions">
+            <span id="topbar-greeting" class="topbar-greeting"></span>
+          </div>
+        </header>
+
+        <!-- Page: Overview -->
+        <section id="page-overview" class="page active">
+          <div class="page-header">
+            <h2>Dashboard Overview</h2>
+            <p class="page-desc">Your opportunity intelligence at a glance</p>
+          </div>
+          
+          <div class="stats-grid">
+            <div class="stat-card stat-total">
+              <div class="stat-icon">📋</div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-total">—</span>
+                <span class="stat-label">Total Opportunities</span>
+              </div>
+            </div>
+            <div class="stat-card stat-internships">
+              <div class="stat-icon">💼</div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-internships">—</span>
+                <span class="stat-label">Internships</span>
+              </div>
+            </div>
+            <div class="stat-card stat-hackathons">
+              <div class="stat-icon">🏆</div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-hackathons">—</span>
+                <span class="stat-label">Hackathons</span>
+              </div>
+            </div>
+            <div class="stat-card stat-sources">
+              <div class="stat-icon">🌐</div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-sources">—</span>
+                <span class="stat-label">Sources</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <h3>🔥 Latest Opportunities</h3>
+                <button class="btn btn-sm btn-ghost" id="view-all-opps">View All →</button>
+              </div>
+              <div id="latest-opps-list" class="opps-list">
+                <div class="skeleton-loader"></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3>📈 Source Breakdown</h3>
+              </div>
+              <div id="source-chart" class="source-chart">
+                <div class="skeleton-loader"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Page: Opportunities -->
+        <section id="page-opportunities" class="page">
+          <div class="page-header">
+            <h2>All Opportunities</h2>
+            <p class="page-desc">Browse all scraped opportunities across all sources</p>
+          </div>
+          <div class="filter-bar">
+            <select id="filter-source" class="filter-select">
+              <option value="all">All Sources</option>
+              <option value="Devfolio">Devfolio</option>
+              <option value="Devpost">Devpost</option>
+              <option value="Internshala">Internshala</option>
+              <option value="Greenhouse">Greenhouse</option>
+            </select>
+            <input type="text" id="filter-keyword" class="filter-input" placeholder="Filter by keyword..." />
+          </div>
+          <div id="all-opps-list" class="opps-table-wrapper">
+            <div class="skeleton-loader"></div>
+          </div>
+        </section>
+
+        <!-- Page: Internships -->
+        <section id="page-internships" class="page">
+          <div class="page-header">
+            <h2>💼 Internships</h2>
+            <p class="page-desc">Internships from Internshala & Greenhouse — filtered for you</p>
+          </div>
+          <div class="filter-bar">
+            <select id="intern-source-filter" class="filter-select">
+              <option value="all">All Sources</option>
+              <option value="Internshala">Internshala</option>
+              <option value="Greenhouse">Greenhouse</option>
+            </select>
+            <select id="intern-category-filter" class="filter-select">
+              <option value="all">All Categories</option>
+              <option value="tech">💻 Tech / Engineering</option>
+              <option value="business">📈 Business / Marketing</option>
+              <option value="design">🎨 Design</option>
+              <option value="hr">👥 HR / Recruitment</option>
+            </select>
+          </div>
+          <div id="internships-list" class="opps-table-wrapper">
+            <div class="skeleton-loader"></div>
+          </div>
+        </section>
+
+        <!-- Page: Hackathons -->
+        <section id="page-hackathons" class="page">
+          <div class="page-header">
+            <h2>🏆 Hackathons</h2>
+            <p class="page-desc">Live and upcoming hackathons from Devfolio & Devpost</p>
+          </div>
+          <div id="hackathons-list" class="opps-table-wrapper">
+            <div class="skeleton-loader"></div>
+          </div>
+        </section>
+
+        <!-- Page: Profile -->
+        <section id="page-profile" class="page">
+          <div class="page-header">
+            <h2>👤 Your Profile</h2>
+            <p class="page-desc">Manage your profile and preferences</p>
+          </div>
+          <div class="profile-grid">
+            <div class="card profile-card">
+              <div class="profile-avatar">
+                <span id="profile-avatar-letter">?</span>
+              </div>
+              <h3 id="profile-email-display">Loading...</h3>
+              <p class="profile-meta" id="profile-meta">Member since —</p>
+              
+              <div class="profile-form">
+                <div class="input-group">
+                  <label for="profile-telegram">Telegram ID (to link bot)</label>
+                  <input type="text" id="profile-telegram" placeholder="Your Telegram chat ID" />
+                </div>
+                <div class="input-group">
+                  <label for="profile-skills">Skills (comma separated)</label>
+                  <input type="text" id="profile-skills" placeholder="Python, React, ML, ..." />
+                </div>
+                <div class="input-group">
+                  <label for="profile-batch">Batch Year</label>
+                  <select id="profile-batch" class="filter-select">
+                    <option value="">Select</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label for="profile-cgpa">CGPA</label>
+                  <input type="number" id="profile-cgpa" placeholder="e.g. 8.5" step="0.1" min="0" max="10" />
+                </div>
+                <button id="save-profile-btn" class="btn btn-primary btn-full">Save Profile</button>
+                <p id="profile-save-msg" class="auth-success" style="display:none;"></p>
+              </div>
+            </div>
+            <div class="card">
+              <h3>🔗 Connect Telegram Bot</h3>
+              <p class="card-text">Link your Telegram account to receive personalized digests directly in chat.</p>
+              <ol class="connect-steps">
+                <li>Open Telegram and search for your bot</li>
+                <li>Send <code>/start</code> to the bot</li>
+                <li>Complete the onboarding flow</li>
+                <li>Your web and bot profiles will be synced!</li>
+              </ol>
+              <div class="bot-commands-preview">
+                <h4>Available Bot Commands:</h4>
+                <div class="command-grid">
+                  <code>/search &lt;keyword&gt;</code>
+                  <code>/internships</code>
+                  <code>/hackathons</code>
+                  <code>/digest</code>
+                  <code>/stats</code>
+                  <code>/subscribe</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

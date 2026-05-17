@@ -7,6 +7,8 @@ yarn-error.log*
 
 # Environment variables
 .env
+web/.env
+web/dist/
 
 # Project specific ignores (as requested)
 ambition.md
