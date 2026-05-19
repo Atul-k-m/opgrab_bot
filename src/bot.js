@@ -26,7 +26,7 @@ const PAGE_SIZE = 5;
 
 // ─── Markdown Escape ───
 function esc(t) {
-  return (t || '').replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
+  return String(t ?? '').replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
 }
 
 // ─── Format one opportunity card ───
@@ -201,18 +201,23 @@ bot.command('internships', async ctx => {
 
 // /hackathons
 bot.command('hackathons', async ctx => {
-  const profile = await getProfile(ctx.chat.id);
-  const opps = await getAllOpps();
-  const hackOpps = opps.filter(o => ['Devfolio', 'Devpost'].includes(o.source));
+  const { data: hackOpps } = await supabase
+    .from('opportunities')
+    .select('id, title, company, url, source, deadline, location, tags, created_at')
+    .in('source', ['Devfolio', 'Devpost', 'Unstop'])
+    .order('created_at', { ascending: false })
+    .limit(100);
 
-  if (!hackOpps.length) return ctx.reply('No hackathons found\\. Run /refresh first\\.', { parse_mode: 'MarkdownV2' });
+  // Filter out non-hackathons from Unstop
+  const filteredHackOpps = (hackOpps || []).filter(o => 
+    ['Devfolio', 'Devpost'].includes(o.source) || 
+    (o.source === 'Unstop' && (o.tags || []).includes('hackathon'))
+  );
 
-  let ranked;
-  if (profile?.skills?.length) {
-    ranked = await rankOpportunities(hackOpps, profile.skills, profile, { limit: 50, minScore: 0 });
-  } else {
-    ranked = hackOpps.slice(0, 50).map(o => ({ ...o, relevancePct: 0, matchedKeywords: [], score: 0 }));
-  }
+  if (!filteredHackOpps.length) return ctx.reply('No hackathons found\\. Run /refresh first\\.', { parse_mode: 'MarkdownV2' });
+
+  // Bypass AI ranking for hackathons (just show latest)
+  let ranked = filteredHackOpps.slice(0, 50).map(o => ({ ...o, relevancePct: 0, matchedKeywords: [], score: 0 }));
 
   pageState.set(ctx.chat.id, { items: ranked, page: 0 });
   await sendPage(ctx, ctx.chat.id, '🏆 *Hackathons*');
@@ -508,9 +513,9 @@ bot.on('text', async ctx => {
       sessions.delete(ctx.chat.id);
       await ctx.reply(
         `🎉 *Profile complete\\!*\n\n` +
-        `📅 Batch: ${session.batch}\n` +
-        `💡 Interests: ${session.skills.join(', ')}\n` +
-        `📊 CGPA: ${cgpa || 'N/A'}\n\n` +
+        `📅 Batch: ${esc(session.batch)}\n` +
+        `💡 Interests: ${esc(session.skills.join(', '))}\n` +
+        `📊 CGPA: ${esc(cgpa) || 'N\\/A'}\n\n` +
         `Try:\n` +
         `/foryou — AI\\-matched opportunities\n` +
         `/internships — India internships\n` +

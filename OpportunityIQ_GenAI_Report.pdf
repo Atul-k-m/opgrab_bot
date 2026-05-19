@@ -1,0 +1,54 @@
+# Project Report: OpportunityIQ
+**AI-Powered Career Intelligence & Matching Platform**
+
+## 1. Project Overview
+OpportunityIQ is a comprehensive, automated career intelligence platform built to solve the fragmentation of job, internship, and hackathon discovery. By aggregating opportunities from over 8+ distinct sources (including Internshala, LinkedIn, Devfolio, Unstop, and remote job boards), the platform centralizes career discovery. However, its core innovation lies in its integration of **Generative Artificial Intelligence (GenAI)** to transition from traditional "keyword search" to "semantic opportunity matching."
+
+## 2. Generative AI Concepts Implemented
+
+OpportunityIQ leverages Large Language Models (LLMs) via the Groq/Gemini API to perform complex reasoning tasks that traditional algorithms struggle with. The following GenAI concepts are core to the platform:
+
+### A. Semantic Matching & Contextual Reasoning
+Traditional job boards use exact keyword matching (e.g., matching "React" to "React"). OpportunityIQ uses an LLM to evaluate the semantic relationship between a user's unstructured profile (skills, CGPA, graduation batch) and the unstructured data of a job posting (title, tags, company). 
+- **Application:** The GenAI model acts as a recruiter, analyzing a batch of 50 jobs at once and assigning a `relevancePct` (0-100) based on contextual fit rather than exact string overlap.
+- **Example:** A user with "C++ and Machine Learning" is intelligently matched to a "Computer Vision Intern" role, even if the exact keywords don't overlap, because the LLM understands the domain adjacency.
+
+### B. Synthetic Taxonomy Expansion (Skill Expansion)
+Users often provide a narrow set of skills during onboarding. To prevent missed opportunities, OpportunityIQ uses GenAI to expand these skills into a broader taxonomy.
+- **Application:** When a user inputs `["UI/UX"]`, the LLM dynamically expands this into `["Figma", "User Research", "Wireframing", "Product Design"]`.
+- **Impact:** This allows the AI to track a massive web of related keywords in the background, significantly improving the recall of the matching engine.
+
+### C. Natural Language Generation (NLG) for Justification
+Instead of simply presenting a list of matched jobs, OpportunityIQ uses the LLM to generate concise, natural language explanations justifying *why* a specific job is a strong match for the user.
+- **Application:** For top-ranked matches, the AI generates a `reason` field (e.g., *"💬 Strong match for your React skills and aligns perfectly with your 2025 graduation date"*).
+- **Impact:** This builds trust and transparency, transforming the bot from a static search engine into an intelligent career advisor.
+
+### D. Automated Intelligence Digestion
+The platform features an AI Digest (`/digest`) that aggregates hundreds of raw data points into actionable insights.
+- **Application:** The LLM evaluates the user's profile strength against the current market data and generates a cohesive summary report, identifying expiring opportunities, trending tech stacks, and top personalized matches in a single narrative payload.
+
+## 3. System Architecture
+The platform is designed for high availability, zero-cost scaling, and real-time intelligence.
+
+1. **Ingestion Engine (Node.js Scraper):**
+   - Scheduled via `node-cron` to run every 6 hours autonomously.
+   - Parses APIs and HTML (Cheerio) from 8 sources.
+   - Performs cryptographic deduplication using SHA-256 hashing to ensure unique records.
+
+2. **Database Layer (Supabase / PostgreSQL):**
+   - Stores user profiles, historical opportunity data, and bot state.
+   - Triggers and constraints ensure data integrity and prevent duplicate URL entries.
+
+3. **Intelligence Layer (Groq / Gemini APIs):**
+   - Processes batched JSON payloads of job data.
+   - Enforces strict JSON schema outputs from the LLM for seamless integration back into the application logic.
+
+4. **User Interfaces:**
+   - **Telegram Bot (`telegraf`):** Provides an interactive, conversational interface for onboarding, querying (`/foryou`, `/jobs`, `/hackathons`), and receiving digests.
+   - **Web Dashboard (Vite / React):** A high-performance, neo-tokyo cyberpunk styled web interface for desktop users, hosted via Vercel.
+
+5. **Deployment & DevOps:**
+   - The backend is deployed as a Render Web Service with an embedded Express.js health-check server to maintain 24/7 uptime via UptimeRobot pinging.
+
+## 4. Conclusion
+OpportunityIQ successfully demonstrates how Generative AI can be used for sophisticated data classification and reasoning rather than just chat interfaces. By applying LLMs to parse, expand, and score structured data, the project effectively eliminates the "noise" of modern job hunting, delivering highly personalized, actionable intelligence directly to students and professionals.
